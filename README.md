@@ -10,14 +10,17 @@ It turns a vague project idea into a staged workflow:
 2. Check it against reality
 3. Research comparable projects and fast-moving changes
 4. Cut the plan down to the simplest useful MVP
-5. Build in small slices
-6. Review the architecture and code before calling it done
+5. Prototype the uncertain parts before locking the MVP
+6. Build in small slices
+7. Review the architecture and code before calling it done
 
 ## Why
 
 AI coding often fails before the first line of code: unclear requirements, copied architecture, over-engineering, and late review.
 
 This skill gives Codex a simple collaboration protocol so it knows when to ask, when to research, when to simplify, and when to build.
+
+It also adds a prototype checkpoint when the user needs to see whether the product matches their intent before implementation hardens.
 
 ## Install
 

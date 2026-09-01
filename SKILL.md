@@ -1,11 +1,11 @@
 ---
 name: ai-project-workflow
-description: Run an AI-assisted project development workflow from idea clarification through research, MVP planning, implementation, and code review.
+description: Use when starting, shaping, or building a software project where requirements, MVP scope, research needs, prototype validation, or implementation order need disciplined coordination.
 ---
 
 # AI Project Workflow
 
-Use this skill when the user wants to start, shape, or build a software project with a disciplined AI development workflow. The goal is to keep Codex from jumping into code too early while still moving toward a shippable MVP.
+Use this skill when the user wants to start, shape, or build a software project with a disciplined AI development workflow. The goal is to keep Codex from jumping into production code too early while still moving toward a shippable MVP that the user has had a chance to see, feel, and validate.
 
 ## Core Rule
 
@@ -22,6 +22,7 @@ When separately installed skills with these names exist, load and follow them at
 - `Autosearch`: Search for comparable products, open-source repositories, architecture examples, or implementation precedents.
 - `last30days-skill`: Check current developments from roughly the last 30 days when the project depends on fast-changing tools, APIs, frameworks, models, pricing, or platform rules.
 - `caveman`: Reduce the plan to the simplest working version and attack over-engineering.
+- `prototype`: Build the smallest disposable or isolated prototype needed to validate the user experience, interaction model, data flow, or technical risk before locking the MVP.
 - `code-reviewer` or `thermo-nuclear-code-quality-review`: Review architecture, implementation, security, maintainability, tests, and unnecessary complexity.
 
 ## Default Order
@@ -30,10 +31,11 @@ When separately installed skills with these names exist, load and follow them at
 2. `idea-reality-mcp`
 3. Research: `Autosearch`, `last30days-skill`, or both
 4. `caveman`
-5. MVP plan and implementation
-6. `code-reviewer` / `thermo-nuclear-code-quality-review`
+5. Prototype validation, when seeing or trying the idea would materially change the MVP
+6. MVP plan and implementation
+7. `code-reviewer` / `thermo-nuclear-code-quality-review`
 
-Research comes after requirements are clear enough to search well. `caveman` comes after research because simplification is stronger when it can reject specific tempting but unnecessary architecture choices.
+Research comes after requirements are clear enough to search well. `caveman` comes after research because simplification is stronger when it can reject specific tempting but unnecessary architecture choices. Prototype work comes after a first simplification pass so the prototype stays small, and before the final MVP plan so user feedback can still reshape the build.
 
 ## Stage Guide
 
@@ -109,13 +111,43 @@ Attack:
 
 Prefer the simplest version that can validate the core promise.
 
-### 5. Plan and Build
+### 5. Prototype Validation
+
+Use when the user needs to see, try, or compare a rough version before committing to the MVP.
+
+Good prototype triggers:
+
+- The main uncertainty is UI, interaction, information architecture, or workflow feel.
+- The user says they want to see whether the product matches their imagination.
+- A technical approach is risky and a small proof would settle it.
+- Requirements are still abstract even after grilling.
+- Multiple product directions remain plausible.
+
+Keep prototypes deliberately narrow:
+
+- Build only what answers the current question.
+- Prefer throwaway, isolated, or clearly marked prototype code.
+- Do not treat prototype code as production unless the user explicitly approves hardening it.
+- Avoid auth, persistence, payments, deployment, and complex integrations unless they are the thing being tested.
+- Capture what the prototype proved, disproved, and changed about the MVP.
+
+After the user reviews the prototype, route based on the result:
+
+- Matches the intent: fold the learning into the MVP plan.
+- Partially matches: revise requirements, then prototype again only if the remaining uncertainty is visual or interactive.
+- Does not match: return to `grill-me` or `idea-reality-mcp` before planning implementation.
+- Feedback expands scope: run `caveman` again before accepting the expansion.
+
+When useful, write the result to `docs/PROTOTYPE.md`: what was tested, what the user confirmed, what changed, and what should not be carried into production.
+
+### 6. Plan and Build
 
 Create artifacts only when useful for the project or requested by the user. Good defaults for a new project are:
 
 - `docs/PRD.md`
 - `docs/ARCHITECTURE.md`
 - `docs/MVP.md`
+- `docs/PROTOTYPE.md` when prototype learning affects the MVP
 - `docs/DECISIONS.md`
 - `docs/TODO.md`
 
@@ -131,7 +163,7 @@ Before coding, state:
 
 Implement in small, reviewable slices.
 
-### 6. Review
+### 7. Review
 
 Use review at more than one point when risk justifies it:
 
@@ -161,6 +193,7 @@ For a new serious project:
 - Usually use `idea-reality-mcp`
 - Usually use either `Autosearch` or `last30days-skill`
 - Always use `caveman` before implementation
+- Use prototype validation when the user needs to see the idea, the UX is uncertain, or a small proof would reduce risk
 - Always use review before completion
 
 For a small feature:
@@ -168,6 +201,7 @@ For a small feature:
 - Use a compressed `grill-me`
 - Skip broad research unless current facts matter
 - Use `caveman` only if the solution is expanding
+- Use a tiny prototype only when the interaction or visual direction is unclear
 - Review the diff before completion
 
 For a bug fix:
