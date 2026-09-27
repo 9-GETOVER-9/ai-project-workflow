@@ -1,6 +1,6 @@
 ---
 name: ai-project-workflow
-description: Use when starting, shaping, or building a software project where requirements, MVP scope, research needs, prototype validation, or implementation order need disciplined coordination.
+description: Use when starting or shaping a software project, clarifying an MVP, validating a prototype, or when an AI agent starts coding before understanding the user's intent. Also use when the user explicitly requests ai-project-workflow.
 ---
 
 # AI Project Workflow
@@ -9,9 +9,36 @@ Use this skill when the user wants to start, shape, or build a software project 
 
 ## Core Rule
 
-Do not run every stage by default. Select the lightest workflow that fits the user's project risk, uncertainty, and requested depth.
+First establish what the user wants; then select the lightest workflow that fits the project's risk and uncertainty. The entry rules below govern whether clarification is needed before work begins.
 
-If the user explicitly asks for a full workflow, use all relevant stages. If the request is small or already well specified, compress or skip stages whose questions are already answered.
+Use all relevant stages when the user asks for the full workflow. Compress stages whose questions are already answered, but do not substitute the agent's assumptions for the user's answers.
+
+## Entry Contract: Clarify Before Building
+
+Read the full skill when invoked. Inspect the current request, relevant conversation, and existing project requirements before choosing a stage. A request to explain or edit this skill is a skill-maintenance task, not a new product to interview the user about.
+
+On entry, briefly name `ai-project-workflow`, the active stage, and the next concrete step in the user's language. Announcing a stage does not perform it.
+
+| Situation | Required next behavior |
+| --- | --- |
+| New idea, vague MVP, or materially unclear feature | Start `grill-me`. Ask focused product questions and wait for the answers needed to select the product direction. |
+| User only invokes the skill, without a project description | Ask what problem they want to solve and for whom. |
+| Existing, user-confirmed brief or precise narrow change | State the relevant settled scope and proceed. Do not repeat answered questions or invent a new approval step. |
+| User explicitly delegates product choices or says to skip questions | State reasonable working assumptions and proceed within that scope. Do not record assumptions as user-confirmed facts. |
+| Continuing an existing project | Recover the last confirmed scope, current stage and unresolved questions; resume from there. |
+
+For a new idea without a settled brief, the first substantive response must contain real questions about the missing product decisions. A proposed feature list or a statement such as "I will clarify requirements" does not fulfill this contract. "Simple MVP", "start quickly", an existing scaffold, and permission to choose a technology stack do not by themselves settle the target user or core workflow.
+
+### Ask, Receive, Then Advance
+
+- Ask about the highest-impact unknowns first: who needs it, one concrete problem, the core input/action/result, and what would make the first version successful. Reuse answers already supplied. Ask about constraints only when they affect the next decision.
+- Keep each round easy to answer. Prefer a short question or small related set, with concrete options when helpful. Do not turn the full discovery checklist into a questionnaire or require a fixed number of rounds.
+- Use an available question tool only within its supported mode and host rules. If no eligible tool exists, put the questions in the final reply and yield for the user's answer. Tool unavailability does not authorize skipping clarification.
+- When questions are pending, continue only independent work such as reading relevant existing code. Do not create speculative project documents, scaffold a product, lock its scope, or implement behavior that depends on those answers. An unanswered asynchronous question, elapsed time, or silence is not an answer.
+- After an answer, summarize the resulting user, core behavior, MVP exclusions, and observable acceptance criteria. Separate confirmed facts, delegated assumptions, and open questions. Ask a follow-up only if a remaining uncertainty would materially change the work.
+- Move forward when the needed facts are supplied or choices explicitly delegated and the requested next step is authorized. Do not ask for permission again merely to advance a stage. A generic "continue" does not choose between still-unanswered product alternatives; "choose for me" delegates that choice.
+
+For example, "Build an AI notes MVP; choose the stack" can begin with: "Who is it for, and what should AI do to one actual note: summarize it, organize it, or answer questions from it?" Wait for that product answer before choosing a feature set. The stack choice can remain delegated.
 
 ## Invocation Modes
 
@@ -57,7 +84,7 @@ Research comes after requirements are clear enough to search well. `caveman` com
 
 Use when this is the first time the workflow enters a real project repo, or when the repo lacks stable AI-facing project conventions.
 
-Setup is project foundation work, not product implementation. Establish only the lightweight files that help future sessions continue without rediscovering basics:
+Inspect existing conventions on entry. Create or update setup files after the project direction and workspace are established; setup does not take precedence over the entry questions. Establish only the lightweight files that help future sessions continue without rediscovering basics:
 
 - `docs/agents/issue-tracker.md`: where work items live, such as GitHub Issues, Linear, or local markdown files.
 - `CONTEXT.md`: the project glossary and durable product/domain language. Keep it about meanings, not implementation details.
@@ -67,7 +94,7 @@ If these files already exist, read and respect them. Update them only when the c
 
 ### 1. Grill-Me
 
-Use first unless the user has already provided a clear PRD or asks for a narrow code change.
+Follow the entry contract. A clear user-provided PRD, an already confirmed brief, or an unambiguous narrow change can satisfy discovery; an assistant-generated draft alone cannot.
 
 Extract:
 
@@ -81,7 +108,7 @@ Extract:
 - Success criteria
 - MVP acceptance tests
 
-Ask only the questions that materially change the plan. Avoid long questionnaires when a few pointed questions are enough.
+Use this list to find missing decisions, not to ask every item aloud. Discovery is ready to advance when the intended user, core behavior, scope boundaries, and acceptance are known well enough for the next step, with material constraints resolved or explicitly delegated. Do not mark this stage complete just because questions have been sent.
 
 ### 2. Idea-Reality Check
 
@@ -156,6 +183,8 @@ Keep prototypes deliberately narrow:
 - Do not treat prototype code as production unless the user explicitly approves hardening it.
 - Avoid auth, persistence, payments, deployment, and complex integrations unless they are the thing being tested.
 - Capture what the prototype proved, disproved, and changed about the MVP.
+
+When the user requested a preview before deciding, deliver a viewable prototype or runnable preview and ask whether the main flow matches their intent. Wait for that feedback before hardening it into the product. A screenshot, successful build, or the agent's own review cannot establish user acceptance. Existing explicit authorization to proceed or a later instruction to skip feedback still applies.
 
 After the user reviews the prototype, route based on the result:
 
@@ -293,6 +322,8 @@ Never silently move from planning or research into implementation when the user 
 ## Project Memory
 
 Use `CONTEXT.md` and ADRs to stop future sessions from forgetting settled meaning and decisions.
+
+When an existing project document can hold continuation state, briefly record the active stage, confirmed scope, unresolved questions, prototype feedback status, and next action there. Do not create a separate process file for every turn. On resume, verify that state against the current request and workspace; restore pending questions without restarting completed discovery or treating unreviewed drafts as accepted requirements.
 
 - `CONTEXT.md` records stable vocabulary: what important product and domain words mean.
 - ADRs record important decisions: what was chosen, why, rejected alternatives, and consequences.

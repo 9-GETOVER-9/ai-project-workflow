@@ -48,6 +48,32 @@ $ai-project-workflow
 
 ## Workflow
 
+For a new idea, the first substantive response identifies the current stage and
+asks about the product decisions that are still missing. The agent waits for
+those answers before implementing anything that depends on them. Choosing a
+technology stack for you does not mean choosing the product's purpose for you.
+
+For example:
+
+```text
+$ai-project-workflow I want to build an AI notes tool. Help me clarify the MVP.
+```
+
+Expect questions about who will use it and what AI should do with a real note.
+After the answers, the agent summarizes the scope and acceptance criteria and
+continues the authorized work. If you request a prototype to review first,
+it presents a preview and waits for your feedback before production work.
+
+An already confirmed brief or precise small edit can proceed directly. You
+can also explicitly delegate choices:
+
+```text
+$ai-project-workflow Skip the interview. Choose the scope for a local todo demo.
+```
+
+In that case, the agent labels its assumptions and proceeds. Continuing a
+project resumes its last confirmed stage instead of restarting the interview.
+
 The skill does not force every stage every time. It chooses the lightest process that fits the project:
 
 - New project: full workflow
@@ -60,6 +86,7 @@ The skill does not force every stage every time. It chooses the lightest process
 
 - `SKILL.md`: the actual Codex skill
 - `agents/openai.yaml`: display metadata for Codex
+- `docs/BEHAVIOR_CHECKS.md`: behavioral regression scenarios and validation notes
 
 ## License
 
