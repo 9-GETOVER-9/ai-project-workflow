@@ -1,22 +1,38 @@
-# AI Project Workflow · AI 项目开发工作流
+<div align="center">
 
-把模糊想法变成可验证的软件：先明确问题，再研究、收缩 MVP、制作原型、分段实现与复盘。
+# AI Project Workflow
 
-**Codex Skill · 从想法到 MVP · 项目记忆 · 纵向切片 · 质量复核**
+**从澄清想法到交付 MVP，让 AI 协作开发有明确的步骤与检查点。**
+
+`Codex Skill` · `需求澄清` · `项目规划` · `MVP 复核`
+
+[![GitHub Stars](https://img.shields.io/github/stars/9-GETOVER-9/ai-project-workflow?style=for-the-badge&color=839778)](https://github.com/9-GETOVER-9/ai-project-workflow/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-7A9270?style=for-the-badge)](LICENSE)
+
+[快速安装](#section-2) · [功能矩阵](#section-3) · [适用边界](#section-7)
+
+</div>
+
+---
+
+<a id="section-1"></a>
 
 ## 一句话介绍
 
 这是一个给 Codex 使用的项目协作 Skill。它会按项目所处阶段提出关键问题，帮助你确认目标、验证需求、规划最小可用版本，并在实现后检查代码与需求是否吻合。
 
+<a id="section-2"></a>
+
 ## 快速安装
 
 ```powershell
-git clone https://github.com/9-GETOVER-9/ai-project-workflow.git
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills" | Out-Null
-Copy-Item -Recurse -Force .\ai-project-workflow "$env:USERPROFILE\.codex\skills\ai-project-workflow"
+git clone https://github.com/9-GETOVER-9/ai-project-workflow.git "$env:USERPROFILE\.codex\skills\ai-project-workflow"
 ```
 
-在 Codex 中输入 `$ai-project-workflow`，也可以附上想法或现有项目问题。
+已有同名个人 Skill 时，先比较差异再选择更新方式；上述首次安装命令不会覆盖已有目录。安装后新开 Codex 对话，输入 `$ai-project-workflow`，也可以附上想法或现有项目问题。
+
+<a id="section-3"></a>
 
 ## 功能矩阵
 
@@ -30,17 +46,23 @@ Copy-Item -Recurse -Force .\ai-project-workflow "$env:USERPROFILE\.codex\skills\
 | 项目记忆 | 记录术语、问题追踪位置和关键决策 |
 | 完成复核 | 同时检查代码质量与需求匹配 |
 
+<a id="section-4"></a>
+
 ## 使用示例
 
 ```text
 $ai-project-workflow 我想做一个 AI 笔记工具，先帮我确定 MVP。
 ```
 
+<a id="section-5"></a>
+
 ## 核心工作流
 
 ```text
 想法 → 关键问题 → 现实研究 → MVP → 原型 → 纵向切片 → 实现 → 复核
 ```
+
+<a id="section-6"></a>
 
 ## 项目结构
 
@@ -51,11 +73,14 @@ $ai-project-workflow 我想做一个 AI 笔记工具，先帮我确定 MVP。
 | `docs/BEHAVIOR_CHECKS.md` | 行为校验场景 |
 | `assets/` | 项目展示素材 |
 
+<a id="section-7"></a>
+
 ## 适用边界
 
 新项目可走完整流程；明确的小改动和 Bug 修复可以按需缩短流程。已经确认的项目简报会从当前阶段继续。
 
-## 详细说明
+<details>
+<summary>展开配置、维护与详细使用说明</summary>
 
 A Codex skill for building software with AI without letting the AI sprint into code too early.
 
@@ -73,6 +98,8 @@ It turns a vague project idea into a staged workflow:
 7. Build one slice at a time
 8. Review both code quality and requirement fit before calling it done
 
+<a id="section-8"></a>
+
 ## Why
 
 AI coding often fails before the first line of code: unclear requirements, copied architecture, over-engineering, and late review.
@@ -89,6 +116,8 @@ It can also establish lightweight project memory:
 
 For larger MVPs, it prefers vertical slices over layer-only task lists, so each slice delivers one verifiable user behavior instead of only "database", "backend", or "frontend" work.
 
+<a id="section-9"></a>
+
 ## Install
 
 Copy this folder into your Codex skills directory:
@@ -102,6 +131,8 @@ Then start a project with:
 ```text
 $ai-project-workflow
 ```
+
+<a id="section-10"></a>
 
 ## Workflow
 
@@ -139,12 +170,18 @@ The skill does not force every stage every time. It chooses the lightest process
 
 `$ai-project-workflow` remains the main entrypoint. Future stage-specific skills can be added underneath it without forcing the user to remember every helper name.
 
+<a id="section-11"></a>
+
 ## Included Files
 
 - `SKILL.md`: the actual Codex skill
 - `agents/openai.yaml`: display metadata for Codex
 - `docs/BEHAVIOR_CHECKS.md`: behavioral regression scenarios and validation notes
 
+<a id="section-12"></a>
+
 ## License
 
 MIT
+
+</details>
